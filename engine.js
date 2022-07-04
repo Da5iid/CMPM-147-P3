@@ -10,6 +10,10 @@ let tile_rows;
 let camera_velocity;
 let camera_offset;
 
+function preload() {
+  spritesheet = loadImage('plane.png');
+}
+
 function setup() {
   camera_offset = new p5.Vector(0, 0);
   camera_velocity = new p5.Vector(0, 0);
@@ -25,16 +29,20 @@ function setup() {
   label.html("World key: ");
   label.parent("container");
 
-  let input = createInput("cm147");
+  let input = createInput("heaven");
   input.parent(label);
   input.input(() => {
     rebuildWorld(input.value());
   });
 
+  
+
   createP("Arrow keys scroll. Clicking changes tiles.").parent("container");
 
   rebuildWorld(input.value());
 }
+
+
 
 function rebuildWorld(key) {
   if (window.p3_worldKeyChanged) {
@@ -81,7 +89,7 @@ function draw() {
   );
   let world_offset = cameraToWorldOffset([camera_offset.x, camera_offset.y]);
 
-  background(0);
+  background(64, 127, 188);
 
   if (window.p3_drawBefore) {
     window.p3_drawBefore();
@@ -89,10 +97,7 @@ function draw() {
 
   for (let y = 0; y < tile_rows; y++) {
     for (let x = 0; x < tile_columns; x++) {
-      drawTile([x + world_offset.x, y + world_offset.y], [
-        camera_offset.x,
-        camera_offset.y
-      ]);
+      drawTile([x + world_offset.x, y + world_offset.y], [camera_offset.x, camera_offset.y]);
     }
   }
 
